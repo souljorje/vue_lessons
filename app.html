@@ -9,25 +9,40 @@
 </head>
 <body>
   <div id="app">
-    <hi v-once>{{ title }}</hi>
-    <p>{{ sayHello() }} - <a v-bind:href="link">Google</a></p>
-    <hr>
-    <p v-html='finishedLink'></p>
+    <button v-on:click="increase(2, $event)">increase</button>
+    <p>{{ counter }}</p>
+    <p v-on:mousemove="updateCoordinates">Coordinates: {{ x }} / {{ y }}
+    - <span v-on:mousemove.stop.prevent="">DEAD SPOT</span>
+    </p>
+    <input type="text" v-on:keyup.enter.space="alertMe">
+    <p>{{ title }}</p>
+    <input type="text" v-on:input="change">
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
-        title: 'Hello World!',
-        link: 'http://google.com',
-        finishedLink: '<a href="http://google.com">Google</a>',
+        counter: 0,
+        x: 0,
+        y: 0,
+        title: ''
       },
       methods: {
-        sayHello: function () {
-          this.title = "Hello!"
-          return this.title;
+        increase: function(num, event) {
+          this.counter += num;
         },
+        updateCoordinates: function(event) {
+          this.x = event.clientX;
+          this.y = event.clientY;
+        },
+        alertMe: function() {
+          alert('alert!')
+        },
+        change: function(event) {
+          this.title = event.target.value;
+        }
       }
+      
     })
   </script>
 </body>
