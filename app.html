@@ -9,37 +9,36 @@
 </head>
 <body>
   <div id="app">
-    <button v-on:click="increase(2, $event)">increase</button>
-    <p>{{ counter }}</p>
-    <p v-on:mousemove="updateCoordinates">Coordinates: {{ x }} / {{ y }}
-    - <span v-on:mousemove.stop.prevent="">DEAD SPOT</span>
-    </p>
-    <input type="text" v-on:keyup.enter.space="alertMe">
-    <p>{{ title }}</p>
-    <input type="text" v-on:input="change">
+    <button v-on:click="counter++">Increase</button>
+    <button v-on:click="counter--">Decrease</button>
+    <button v-on:click="secondCounter++">Increase</button>
+    <p>Counter: {{ counter }} | {{ secondCounter }} </p>
+    <p>Result: {{ result() }} | {{ output }}</p>
   </div>
   <script>
     new Vue({
       el: '#app',
       data: {
         counter: 0,
-        x: 0,
-        y: 0,
-        title: ''
+        secondCounter: 0,
+      },
+      computed: {
+        output: function() {
+          console.log('Computed');
+          return this.counter > 5 ? 'Greater than 5' : 'Smaller than 5'
+        }
+      },
+      watch: {
+        counter: function(value) {
+          setTimeout(() => {
+            this.counter = 0;
+          }, 2000);
+        }
       },
       methods: {
-        increase: function(num, event) {
-          this.counter += num;
-        },
-        updateCoordinates: function(event) {
-          this.x = event.clientX;
-          this.y = event.clientY;
-        },
-        alertMe: function() {
-          alert('alert!')
-        },
-        change: function(event) {
-          this.title = event.target.value;
+        result: function () {
+          console.log('method')
+          return this.counter > 5 ? 'Greater than 5' : 'Smaller than 5'
         }
       }
       
