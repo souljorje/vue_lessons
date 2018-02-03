@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+  <script src="../vue.js"></script>
+  <div id="exercise">
+    <!-- 1) Start the Effect with the Button. The Effect should alternate the "highlight" or "shrink" class on each new setInterval tick (attach respective class to the div with id "effect" below) -->
+    <div>
+      <button @click="startEffect">Start Effect</button>
+      <div id="effect" :class="currentClass"></div>
+    </div>
+    <!-- 2) Create a couple of CSS classes and attach them via the array syntax -->
+    <div :class="[defaultClass, {blue: needSomeBlue}]">I got no class :(</div>
+    <!-- 3) Let the user enter a class (create some example classes) and attach it -->
+    <div>
+      <div>You may make block: 
+        <ul>
+          <li>Rotate</li>
+          <li>Round</li>
+          <li>Bigger</li>
+          <li>Bounce</li>
+          <li>Shake</li>
+        </ul>
+        Write one class or list separated by commas.
+      </div>
+      <input type="text" @input="setCustomClasses">
+      <div :class="[defaultClass, customClasses]"></div>
+    </div>
+    <!-- 4) Let the user enter a class and enter true/ false for another class (create some example classes) and attach the classes -->
+    <div>
+      <div>You may choose one class form last item and choose if block is big or not.</div> 
+      <input type="text" v-model="singleClass">
+      <input type="text" @input="makeLarger">
+      <div :class="[defaultClass, singleClass, {large: needSomeLarge}]"></div>
+    </div>
+    <!-- 5) Repeat 3) but now with values for styles (instead of class names). Attach the respective styles.  -->
+    <div>
+      <div>Choose size and margins:</div>
+      <input type="text" v-model="size">
+      <div :class="defaultClass" :style="[{width: size + 'px', height: size + 'px', margin: size + 'px'}]"></div>
+    </div>
+    <!-- 6) Create a simple progress bar with setInterval and style bindings. Start it by hitting the below button. -->
+    <div>
+      <button @click="startProgress">Start Progress</button>
+      <div :style="[{backgroundColor: 'green', width: progress + 'px', height: '20px'}]"></div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+
+</html>
+
+
