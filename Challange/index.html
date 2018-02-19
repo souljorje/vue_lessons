@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Monster Slayer</title>
+  <meta charset="UTF-8">
+  <script src="../vue.js"></script>
+  <link rel="stylesheet" href="css/foundation.min.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+  <div id="app">
+    <section class="row">
+      <div class="small-6 columns">
+        <h1 class="text-center">YOU</h1>
+        <h2 class="text-center">{{ playerHP + '%' }}</h2>
+        <div class="healthbar">
+          <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{width: playerHP + '%'}">
+          </div>
+        </div>
+      </div>
+      <div class="small-6 columns">
+        <h1 class="text-center">MONSTER</h1>
+        <h2 class="text-center">{{ monsterHP + '%' }}</h2>
+        <div class="healthbar">
+          <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{width: monsterHP + '%'}">
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="row controls" v-show="!gameStarted">
+      <div class="small-12 columns">
+        <p v-show="gameEnd">{{ gameEnd }}</p>
+        <button id="start-game" @click="gameStarted = true, playerHP = 100, monsterHP = 100, turns = []">START NEW GAME</button>
+      </div>
+    </section>
+    <section class="row controls" v-show="gameStarted">
+      <div class="small-12 columns">
+        <button id="attack" @click="turn('monster', 'attack')" >ATTACK</button>
+        <button id="special-attack" @click="turn('monster', 'slug')" :disabled="!charged">SPECIAL ATTACK</button>
+        <button id="heal" @click="turn('player', 'heal')" >HEAL</button>
+        <button id="give-up" @click="gameStarted = false, gameEnd = 'You give up'">GIVE UP</button>
+      </div>
+    </section>
+    <section class="row log" v-show="turns.length || gameStarted">
+      <div class="small-12 columns">
+        <ul>
+          <li v-for="turn in turns">
+            {{ turn.actor }} {{ turn.action + 's' }} for {{ turn.power }} 
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <script src="./app.js"></script>
+</body>
+
+</html>
