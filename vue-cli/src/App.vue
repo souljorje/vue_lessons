@@ -1,10 +1,15 @@
 <template>
-    <h1>Hello world!</h1>
+    <app-servers></app-servers>
 </template>
 
 <script>
-export default {
-}
+  export default {
+    data() {
+      return {
+        status: 'test',
+      }
+    }
+  }
 </script>
 
 <style>
