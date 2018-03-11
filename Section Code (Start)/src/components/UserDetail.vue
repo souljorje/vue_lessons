@@ -3,12 +3,24 @@
         <h3>You may view the User Details here</h3>
         <p>Many Details</p>
         <p>{{ name }}</p>
+        <button @click="resetName">Reset Name</button>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['name']
+        props: {
+          'name': {
+            type: String,
+            required: true,
+          }
+        },
+        methods: {
+          resetName() {
+            this.name = 'Max';
+            this.$emit('nameWasReset', this.name);
+          }
+        }
     }
 </script>
 
