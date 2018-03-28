@@ -1,11 +1,4 @@
 <template>
-  <!-- <div class="progressbar">
-    <div class="progressbar__outer">
-      <div :style="{width: current === 0 ? 0 : `${maximum/current}%`}" class="progressbar__inner">
-        {{ current }}/{{ maximum }}
-      </div>
-    </div>
-  </div> -->
   <div class="progress">
     <div class="progress-bar"
       role="progressbar"
@@ -13,7 +6,7 @@
       aria-valuemin="0"
       :aria-valuemax="maximum"
       :style="{width: current === 0 ? 0 : `${current/maximum * 100}%`}">
-      <span class="sr-only">{{ current }}/{{ maximum }}</span>
+      <span>{{ current }}/{{ maximum }}</span>
     </div>
   </div>
 </template>
