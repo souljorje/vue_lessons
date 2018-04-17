@@ -12,6 +12,9 @@
                     <label for="Mail">Mail</label>
                     <input id='Mail' type="text" class="form-control" v-model="user.email">
                   </div>
+                  <div class="form-group">
+                    <input class="form-control"  type="text" v-model="node">
+                  </div>
                   <button
                     class="btn btn-primary"
                     @click.prevent="submit">Submit
@@ -42,31 +45,51 @@
           user: {
             userName: '',
             email: '',
-          }
+          },
+          resource: {},
+          node: 'data'
         }
       },
       methods: {
         submit() {
-          this.$http.post('https://vue-http-test-a1b2.firebaseio.com/data.json', this.user)
-            .then(response => {
-              console.log(response);
-            }, error => {
-              console.log(error)
-            });
+          // this.$http.post('data.json', this.user)
+          //   .then(response => {
+          //     console.log(response);
+          //   }, error => {
+          //     console.log(error)
+          //   });
+          this.resource.saveAlt(this.user);
         },
         fetchData() {
-          this.$http.get('https://vue-http-test-a1b2.firebaseio.com/data.json')
-            .then(response => {
-              return response.json();
-            })
-            .then(data => {
+          // this.$http.get('data.json')
+          //   .then(response => {
+          //     return response.json();
+          //   })
+          //   .then(data => {
 
+          //     for (let user in data) {
+          //       console.log(user)
+          //       this.users.push(data[user]);
+          //     }
+          //   })
+          this.resource.getData({node: this.node})
+            .then(response => {
+                return response.json();
+              })
+            .then(data => {
               for (let user in data) {
                 console.log(user)
                 this.users.push(data[user]);
               }
-            })
+            });
         }
+      },
+      created() {
+        const customActions = {
+          saveAlt: {method: 'POST', url: 'alternative.json'},
+          getData: {method: 'GET'},
+        };
+        this.resource = this.$resource('{node}.json', {},  customActions);
       }
     }
 </script>
