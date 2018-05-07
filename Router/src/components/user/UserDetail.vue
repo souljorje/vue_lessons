@@ -23,6 +23,6 @@ export default {
         hash: '#data'
       }
     }
-  }
+  },
 }
 </script>
