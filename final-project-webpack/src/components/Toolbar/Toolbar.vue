@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar fixed class="primary">
+  <v-toolbar class="primary">
     <v-toolbar-side-icon @click="toggleSidebar()" class="hidden-sm-and-up">
     </v-toolbar-side-icon>
     <v-toolbar-title class="mr-3">Trade App</v-toolbar-title>
@@ -26,7 +26,7 @@
       <v-spacer v-if="index === 1" :key="`spacer${index}`"></v-spacer>
     </template>
     <v-toolbar-title class="body-2">
-      Funds
+      Funds {{ funds }}$
     </v-toolbar-title>
   </v-toolbar>
 </template>
@@ -38,9 +38,14 @@ export default {
       menuItems: this.$store.state.header.menuItems,
     };
   },
+  computed: {
+    funds() {
+      return this.$store.state.userData.funds;
+    }
+  },
   methods: {
     toggleSidebar() {
-      this.$store.state.header.showSidebar = !this.$store.state.header.showSidebar;
+      this.$store.commit('toggleSidebar');
     },
   },
 };

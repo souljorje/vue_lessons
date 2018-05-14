@@ -35,7 +35,9 @@ const getters = {
 };
 
 const mutations = {
-
+  toggleSidebar: (state) => {
+    state.showSidebar = !state.showSidebar;
+  },
 };
 
 const actions = {

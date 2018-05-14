@@ -10,6 +10,9 @@ import {
   VGrid,
   VToolbar,
   VMenu,
+  VForm,
+  VTextField,
+  VCard,
   transitions,
 } from 'vuetify';
 
@@ -30,6 +33,9 @@ Vue.use(Vuetify, {
     VGrid,
     VToolbar,
     VMenu,
+    VForm,
+    VTextField,
+    VCard,
     transitions,
   },
   theme: {

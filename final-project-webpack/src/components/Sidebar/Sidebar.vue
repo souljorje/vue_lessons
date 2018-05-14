@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer class='primary hidden-sm-and-up' v-model="showSidebar">
+  <v-navigation-drawer absolute class='primary hidden-sm-and-up' v-model="showSidebar">
     <v-list>
       <v-list-tile v-for="item in menuItems" :key="item.title" @click="">
         <v-list-tile-action>
@@ -27,8 +27,7 @@ export default {
       },
       set(state) {
         if (state !== this.$store.state.header.showSidebar) {
-          this.$store.state.header.showSidebar = !this.$store.state.header
-            .showSidebar;
+          this.$store.commit('toggleSidebar');
         }
       },
     },
