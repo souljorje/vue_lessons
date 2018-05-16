@@ -64,7 +64,7 @@ export default {
     },
     userStocks() {
       return this.$store.state.userData.stocks;
-    }
+    },
   },
   methods: {
     sell(name) {

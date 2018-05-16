@@ -80,6 +80,7 @@ export default {
   name: 'App',
   created() {
     this.$store.commit('calculateData');
+    localStorage.setItem('day', '1');
   },
 };
 </script>

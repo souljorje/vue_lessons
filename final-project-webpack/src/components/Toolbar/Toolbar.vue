@@ -17,19 +17,23 @@
         :key="element.title">
         <v-btn
           flat
-          v-if="!element.items && !element.link">
-          <v-icon left>{{ element.icon }}</v-icon>
-          {{ element.title }}
-        </v-btn>
-        <v-btn
-          flat
-          v-else-if="element.link"
+          v-if="element.link"
           exact
           :to="{ name: element.link }">
           <v-icon left>{{ element.icon }}</v-icon>
           {{ element.title }}
         </v-btn>
-        <v-menu offset-y v-else :key="element.title">
+        <v-btn
+          flat
+          v-if="element.action"
+          @click="endDay">
+          <v-icon left>{{ element.icon }}</v-icon>
+          {{ element.title }}
+        </v-btn>
+        <v-menu
+          offset-y
+          v-else-if="element.items"
+          :key="element.title">
           <v-btn flat slot="activator">
             <v-icon left>{{ element.icon }}</v-icon>
             {{ element.title }}
@@ -42,6 +46,12 @@
             </v-list-tile>
           </v-list>
         </v-menu>
+        <v-btn
+          flat
+          v-else-if="!element.link && !element.items">
+          <v-icon left>{{ element.icon }}</v-icon>
+          {{ element.title }}
+        </v-btn>
       </v-toolbar-items>
       <v-spacer v-if="index === 1" :key="`spacer${index}`"></v-spacer>
     </template>
@@ -61,12 +71,15 @@ export default {
   computed: {
     funds() {
       return this.$store.state.userData.funds;
-    }
+    },
   },
   methods: {
     toggleSidebar() {
       this.$store.commit('toggleSidebar');
     },
+    endDay() {
+      this.$store.dispatch('newDay');
+    }
   },
 };
 </script>

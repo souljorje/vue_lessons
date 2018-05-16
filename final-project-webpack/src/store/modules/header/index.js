@@ -1,3 +1,5 @@
+import mutations from './mutations';
+
 const state = {
   showSidebar: false,
   menuItems: [
@@ -14,6 +16,7 @@ const state = {
     {
       icon: 'update',
       title: 'End day',
+      action: 'endDay',
     },
     {
       icon: 'backup',
@@ -32,23 +35,7 @@ const state = {
   ],
 };
 
-const getters = {
-
-};
-
-const mutations = {
-  toggleSidebar: (state) => {
-    state.showSidebar = !state.showSidebar;
-  },
-};
-
-const actions = {
-
-};
-
 export default {
   state,
-  getters,
   mutations,
-  actions,
 };
