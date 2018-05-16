@@ -1,7 +1,11 @@
 <template>
   <v-navigation-drawer absolute class='primary hidden-sm-and-up' v-model="showSidebar">
     <v-list>
-      <v-list-tile v-for="item in menuItems" :key="item.title" @click="">
+      <template v-for="item in menuItems">
+        <v-list-tile
+        :key="item.title"
+        v-if="item.link"
+        :to="{ name: item.link }">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -9,6 +13,17 @@
           {{ item.title }}
         </v-list-tile-content>
       </v-list-tile>
+      <v-list-tile
+        :key="item.title"
+        v-else>
+        <v-list-tile-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          {{ item.title }}
+        </v-list-tile-content>
+      </v-list-tile>
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>

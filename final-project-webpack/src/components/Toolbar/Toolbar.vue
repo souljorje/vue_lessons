@@ -2,10 +2,30 @@
   <v-toolbar class="primary">
     <v-toolbar-side-icon @click="toggleSidebar()" class="hidden-sm-and-up">
     </v-toolbar-side-icon>
-    <v-toolbar-title class="mr-3">Trade App</v-toolbar-title>
+    <v-toolbar-title class="mr-3">
+      <router-link
+        to="/"
+        tag="a"
+        exact
+        style="color: #000; text-decoration: none;">
+        Trade App
+      </router-link>
+    </v-toolbar-title>
     <template v-for="(element, index) in menuItems">
-      <v-toolbar-items class="hidden-xs-only" :key="element.title">
-        <v-btn flat v-if="!element.items">
+      <v-toolbar-items
+        class="hidden-xs-only"
+        :key="element.title">
+        <v-btn
+          flat
+          v-if="!element.items && !element.link">
+          <v-icon left>{{ element.icon }}</v-icon>
+          {{ element.title }}
+        </v-btn>
+        <v-btn
+          flat
+          v-else-if="element.link"
+          exact
+          :to="{ name: element.link }">
           <v-icon left>{{ element.icon }}</v-icon>
           {{ element.title }}
         </v-btn>

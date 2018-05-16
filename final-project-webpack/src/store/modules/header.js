@@ -4,10 +4,12 @@ const state = {
     {
       icon: 'work_outline',
       title: 'Portfolio',
+      link: 'portfolio',
     },
     {
       icon: 'timeline',
       title: 'Stocks',
+      link: 'stocks',
     },
     {
       icon: 'update',

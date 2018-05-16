@@ -46,17 +46,26 @@ export default new Vuex.Store({
     },
     buy(state, payload) {
       const userStocks = state.userData.stocks;
-      if (userStocks[payload.name]) {
-        userStocks[payload.name] += payload.amount;
-      } else {
-        userStocks[payload.name] = payload.amount;
+      const userFunds = state.userData.funds;
+      const stockPrice = state.transformedData[payload.name].buy;
+      let { amount } = payload;
+      let { price } = payload;
+      if (stockPrice * amount >= userFunds) {
+        amount = Math.floor(userFunds / stockPrice);
+        price = stockPrice * amount;
       }
-      state.userData.funds -= payload.price;
+      if (userStocks[payload.name]) {
+        userStocks[payload.name] += amount;
+      } else {
+        userStocks[payload.name] = amount;
+      }
+      state.userData.funds -= price;
     },
     sell(state, payload) {
       const userStocks = state.userData.stocks;
-      if (userStocks[payload.name] && userStocks[payload.name] > 0) {
-        if (userStocks[payload.name] < payload.amount) {
+      const currentAmount = userStocks[payload.name];
+      if (currentAmount && currentAmount > 0) {
+        if (currentAmount < payload.amount) {
           userStocks[payload.name] = 0;
           state.userData.funds += state.transformedData[payload.name].sell * payload.amount;
         } else {
