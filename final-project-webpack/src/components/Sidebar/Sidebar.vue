@@ -1,39 +1,61 @@
 <template>
   <v-navigation-drawer absolute class='primary hidden-sm-and-up' v-model="showSidebar">
     <v-list>
-      <template v-for="item in menuItems">
-        <v-list-tile
-        :key="item.title"
-        v-if="item.link"
-        :to="{ name: item.link }">
+      <v-list-tile
+        :to="{ name: 'portfolio' }">
         <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon>work_outline</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          {{ item.title }}
+          Portfolio
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile
-        :key="item.title"
-        v-else>
+        :to="{ name: 'stocks' }">
         <v-list-tile-action>
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon>timeline</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          {{ item.title }}
+          Stocks
         </v-list-tile-content>
       </v-list-tile>
-      </template>
+      <v-list-tile
+        @click="endDay">
+        <v-list-tile-action>
+          <v-icon>update</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          End day
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile
+        @click="">
+        <v-list-tile-action>
+          <v-icon>save</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          Save data
+        </v-list-tile-content>
+      </v-list-tile>
+      <v-list-tile
+        @click="">
+        <v-list-tile-action>
+          <v-icon>restore</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          Load data
+        </v-list-tile-content>
+      </v-list-tile>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      menuItems: this.$store.state.header.menuItems,
-    };
+  methods: {
+    endDay() {
+      this.$store.dispatch('newDay');
+    }
   },
   computed: {
     showSidebar: {

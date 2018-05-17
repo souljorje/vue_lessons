@@ -13,7 +13,6 @@
 </template>
 
 <style lang="stylus">
-
 $translate = 10px
 $duration = 0.3s
 
@@ -28,27 +27,6 @@ $duration = 0.3s
     animation slide-out $duration ease forwards
     transition $duration ease opacity
     opacity 0
-
-// .slide-enter {
-//   opacity: 0;
-//   transform: translateY(20px);
-// }
-// .slide-enter-active {
-//   animation: slide-in 0.2s ease forwards;
-//   transition: 0.2s ease opacity;
-// }
-// .slide-leave {
-// }
-// .slide-leave-active {
-//   animation: slide-out 0.2s ease forwards;
-//   transition: 0.2s ease opacity;
-//   opacity: 0;
-//   /* position: absolute; */
-// }
-
-// .slide-move {
-//   transition: transform 0.2s;
-// }
 
 @keyframes slide-in
   from
@@ -79,8 +57,17 @@ export default {
   },
   name: 'App',
   created() {
-    this.$store.commit('calculateData');
-    localStorage.setItem('day', '1');
+    this.$http.get('defaultData.json')
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        this.$store.state.defaultData = data;
+        localStorage.setItem('day', this.$store.state.defaultData.day);
+      })
+      .then(() => {
+        this.$store.commit('calculateData');
+      })
   },
 };
 </script>

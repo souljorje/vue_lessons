@@ -25,6 +25,8 @@ export default new Router({
       name: 'portfolio',
       component: appPortfolio,
     },
-
+    {
+      path: '*', redirect: '/',
+    },
   ],
 });

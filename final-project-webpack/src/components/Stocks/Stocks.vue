@@ -1,6 +1,9 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm6 v-for="(item, name) in stocksData" :key="name">
+    <v-flex
+      xs12 sm6
+      v-for="(item, name) in stocksData"
+      :key="name">
       <v-card class="trade-card">
         <v-toolbar color="secondary">
           <v-toolbar-title>{{ name }}</v-toolbar-title>

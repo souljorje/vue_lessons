@@ -4,6 +4,7 @@ export default {
     const copiedData = { ...state.defaultData };
     const names = Object.keys(copiedData);
     names.forEach((name) => {
+      if (name === 'day') return;
       copiedData[name].buy = Math.round(copiedData[name].value * getRandom(0.5, 1.5));
       copiedData[name].sell = Math.round(copiedData[name].value * getRandom(0.5, 1.5));
     });

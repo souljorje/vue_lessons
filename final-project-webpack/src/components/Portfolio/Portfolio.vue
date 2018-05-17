@@ -1,6 +1,9 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm6 v-for="(item, name) in stocksData" :key="name">
+    <v-flex xs12 sm6
+      v-for="(item, name) in stocksData"
+      :key="name"
+      v-if="userStocks[name]">
       <v-card class="trade-card">
         <v-toolbar class="sell-toolbar">
           <v-toolbar-title>{{ name }}</v-toolbar-title>
@@ -32,6 +35,15 @@
         </v-form>
       </v-card>
     </v-flex>
+    <v-alert :value="Object.keys(userStocks).length < 1" type="info">
+      No stocks in portfolio.
+      <router-link
+        exact
+        :to="{ name: 'stocks' }"
+        style="color: #fff">
+        Go and get some!
+      </router-link>
+    </v-alert>
   </v-layout>
 </template>
 

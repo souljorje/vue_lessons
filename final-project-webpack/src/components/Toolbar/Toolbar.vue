@@ -2,72 +2,81 @@
   <v-toolbar class="primary">
     <v-toolbar-side-icon @click="toggleSidebar()" class="hidden-sm-and-up">
     </v-toolbar-side-icon>
-    <v-toolbar-title class="mr-3">
-      <router-link
+    <router-link
         to="/"
         tag="a"
         exact
-        style="color: #000; text-decoration: none;">
+        class="toolbar-link">
+      <v-toolbar-title class="mr-3">
         Trade App
-      </router-link>
-    </v-toolbar-title>
-    <template v-for="(element, index) in menuItems">
-      <v-toolbar-items
-        class="hidden-xs-only"
-        :key="element.title">
-        <v-btn
-          flat
-          v-if="element.link"
-          exact
-          :to="{ name: element.link }">
-          <v-icon left>{{ element.icon }}</v-icon>
-          {{ element.title }}
+      </v-toolbar-title>
+    </router-link>
+    <v-toolbar-items
+      class="hidden-xs-only">
+      <v-btn
+        flat
+        exact
+        :to="{ name: 'portfolio' }">
+        <v-icon left>work_outline</v-icon>
+        Portfolio
+      </v-btn>
+    </v-toolbar-items>
+    <v-toolbar-items>
+      <v-btn
+        flat
+        exact
+        :to="{ name: 'stocks' }">
+        <v-icon left>timeline</v-icon>
+        Stocks
+      </v-btn>
+    </v-toolbar-items>
+    <v-spacer></v-spacer>
+    <v-toolbar-items>
+      <v-btn
+        flat
+        @click="endDay">
+        <v-icon left>update</v-icon>
+        End day
+      </v-btn>
+    </v-toolbar-items>
+    <v-toolbar-items>
+      <v-menu
+        offset-y>
+        <v-btn flat slot="activator">
+          <v-icon left>backup</v-icon>
+          Save & Load
+          <v-icon>arrow_drop_down</v-icon>
         </v-btn>
-        <v-btn
-          flat
-          v-if="element.action"
-          @click="endDay">
-          <v-icon left>{{ element.icon }}</v-icon>
-          {{ element.title }}
-        </v-btn>
-        <v-menu
-          offset-y
-          v-else-if="element.items"
-          :key="element.title">
-          <v-btn flat slot="activator">
-            <v-icon left>{{ element.icon }}</v-icon>
-            {{ element.title }}
-            <v-icon>arrow_drop_down</v-icon>
-          </v-btn>
-          <v-list class="secondary">
-            <v-list-tile v-for="item in element.items" :key="item.title" @click="">
-              <v-icon left class="mr-3">{{ item.icon }}</v-icon>
-              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-        <v-btn
-          flat
-          v-else-if="!element.link && !element.items">
-          <v-icon left>{{ element.icon }}</v-icon>
-          {{ element.title }}
-        </v-btn>
-      </v-toolbar-items>
-      <v-spacer v-if="index === 1" :key="`spacer${index}`"></v-spacer>
-    </template>
+        <v-list class="secondary">
+          <v-list-tile @click="">
+            <v-icon left class="mr-3">save</v-icon>
+            <v-list-tile-title>Save data</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="">
+            <v-icon left class="mr-3">restore</v-icon>
+            <v-list-tile-title>Load data</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+    </v-toolbar-items>
     <v-toolbar-title class="body-2">
       Funds {{ funds }}$
     </v-toolbar-title>
   </v-toolbar>
 </template>
 
+<style lang="stylus">
+.toolbar-link
+  height 100%
+  display flex
+  align-items center
+  color #000
+  text-decoration none
+</style>
+
+
 <script>
 export default {
-  data() {
-    return {
-      menuItems: this.$store.state.header.menuItems,
-    };
-  },
   computed: {
     funds() {
       return this.$store.state.userData.funds;

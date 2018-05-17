@@ -13,15 +13,19 @@ import {
   VForm,
   VTextField,
   VCard,
+  VAlert,
   transitions,
 } from 'vuetify';
 
 import Vue from 'vue';
+import VueResource from 'vue-resource';
 import App from './App';
 import router from './router';
 import store from './store/store';
 import './stylus/main.styl';
 
+Vue.use(VueResource);
+Vue.http.options.root = 'https://tradeapp-db8bb.firebaseio.com/';
 Vue.use(Vuetify, {
   components: {
     VApp,
@@ -36,6 +40,7 @@ Vue.use(Vuetify, {
     VForm,
     VTextField,
     VCard,
+    VAlert,
     transitions,
   },
   theme: {

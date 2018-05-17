@@ -10,20 +10,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     defaultData: {
-      BMW: {
-        value: 110,
-      },
-      Google: {
-        value: 190,
-      },
-      Apple: {
-        value: 230,
-      },
-      Gazprom: {
-        value: 140,
-      },
+
     },
-    transformedData: null,
+    transformedData: {
+    },
     userData: {
       stocks: {},
       funds: 10000,
