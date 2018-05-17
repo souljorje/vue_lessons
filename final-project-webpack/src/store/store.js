@@ -9,14 +9,28 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    defaultData: {
-
+    currentData: {
+      features: {
+        Apple: {
+          value: 230,
+        },
+        BMW: {
+          value: 110,
+        },
+        Gazprom: {
+          value: 140,
+        },
+        Google: {
+          value: 190,
+        },
+      },
+      day: 1,
     },
-    transformedData: {
+    currentData: {
     },
     userData: {
       stocks: {},
-      funds: 10000,
+      funds: '-',
     },
   },
   getters,

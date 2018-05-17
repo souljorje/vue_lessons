@@ -1,5 +1,9 @@
 <template>
-  <v-layout row wrap>
+  <transition-group
+      name="slide"
+      tag="div"
+      class="layout row wrap"
+      style="position: relative">
     <v-flex
       xs12 sm6
       v-for="(item, name) in stocksData"
@@ -33,7 +37,7 @@
         </v-form>
       </v-card>
     </v-flex>
-  </v-layout>
+  </transition-group>
 </template>
 
 <style lang="stylus">
@@ -41,22 +45,29 @@
     min-height auto
 </style>
 
-
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
-    const amount = this.$store.getters.getNames.reduce((result, item) => {
-      result[item] = null;
-      return result;
-    }, {});
     return {
-      amount,
+      amount: {},
     };
   },
   computed: {
     stocksData() {
-      return this.$store.state.transformedData;
+      return this.$store.state.currentData.features;
     },
+    ...mapGetters(['getNames']),
+  },
+  watch: {
+    getNames() {
+      const amount = this.$store.getters.getNames.reduce((result, item) => {
+        result[item] = null;
+        return result;
+      }, {});
+      this.amount = amount;
+    }
   },
   methods: {
     buy(name) {

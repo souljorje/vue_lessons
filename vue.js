@@ -1166,13 +1166,13 @@ function mergeDataOrFn (
       var instanceData = typeof childVal === 'function'
         ? childVal.call(vm, vm)
         : childVal;
-      var defaultData = typeof parentVal === 'function'
+      var currentData = typeof parentVal === 'function'
         ? parentVal.call(vm, vm)
         : parentVal;
       if (instanceData) {
-        return mergeData(instanceData, defaultData)
+        return mergeData(instanceData, currentData)
       } else {
-        return defaultData
+        return currentData
       }
     }
   }

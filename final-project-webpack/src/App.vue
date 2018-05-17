@@ -30,14 +30,18 @@ $duration = 0.3s
 
 @keyframes slide-in
   from
+    opacity 0
     transform translateY($translate)
   to
+    opacity 1
     transform translateY(0)
 
 @keyframes slide-out
   from
+    opacity 1
     transform translateY(0)
   to
+    opacity 0
     transform translateY($translate)
 </style>
 
@@ -47,6 +51,7 @@ import appSidebar from './components/Sidebar/Sidebar';
 import appToolbar from './components/Toolbar/Toolbar';
 import appStocks from './components/Stocks/Stocks';
 import appPortfolio from './components/Portfolio/Portfolio';
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -56,18 +61,12 @@ export default {
     appPortfolio,
   },
   name: 'App',
+  methods: {
+    ...mapActions(['getStocksData', 'getUserData']),
+  },
   created() {
-    this.$http.get('defaultData.json')
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        this.$store.state.defaultData = data;
-        localStorage.setItem('day', this.$store.state.defaultData.day);
-      })
-      .then(() => {
-        this.$store.commit('calculateData');
-      })
+    this.getStocksData();
+    this.getUserData();
   },
 };
 </script>
