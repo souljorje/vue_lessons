@@ -48,11 +48,11 @@
           <v-icon>arrow_drop_down</v-icon>
         </v-btn>
         <v-list class="secondary">
-          <v-list-tile @click="">
+          <v-list-tile @click="saveData">
             <v-icon left class="mr-3">save</v-icon>
             <v-list-tile-title>Save data</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click="">
+          <v-list-tile @click="loadData">
             <v-icon left class="mr-3">restore</v-icon>
             <v-list-tile-title>Load data</v-list-tile-title>
           </v-list-tile>
@@ -76,6 +76,8 @@
 
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   computed: {
     funds() {
@@ -88,7 +90,8 @@ export default {
     },
     endDay() {
       this.$store.dispatch('newDay');
-    }
+    },
+    ...mapActions(['saveData', 'loadData']),
   },
 };
 </script>

@@ -11,22 +11,32 @@ export default {
       });
   },
   getStocksData({ state, commit }) {
-    debugger
     return resources.getStocksData()
       .then((response) => {
         if (response.status !== 200) {
-          commit('calculateData');
-          return state.currentData;
-        } else {
-          return response.json();
+          throw new Error(`Server responded with status ${response.status}`);
         }
+        return response.json();
       })
       .then((data) => {
-        state.currentData = data;
+        const currentDay = localStorage.getItem('day');
+        if (!data) {
+          localStorage.setItem('day', state.currentData.day);
+        } else if (data.day !== currentDay) {
+          const dayToSet = Math.max(data.day, currentDay);
+          state.currentData.day = dayToSet;
+          localStorage.setItem('day', dayToSet);
+        } else {
+          state.currentData = data;
+          return data;
+        }
+        commit('calculateData');
+        return state.currentData;
       });
   },
   updateStocksData({ state }) {
-    resources.updateUserData(state.currentData);
+    resources.updateStocksData(state.currentData)
+      .then(response => response, error => new Error(error));
   },
   getUserData({ state }) {
     return resources.getUserData()
@@ -38,16 +48,40 @@ export default {
   updateUserData({ state }) {
     resources.updateUserData(state.userData);
   },
+  saveData({ state }) {
+    resources.saveData({
+      currentData: state.currentData,
+      userData: state.userData,
+    });
+  },
+  loadData({ state, dispatch }) {
+    resources.loadData()
+      .then((response) => {
+        if (response.status !== 200) {
+          throw new Error(`Server responded with status ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        state.currentData = data.currentData;
+        state.userData = data.userData;
+        return data;
+      })
+      .then(() => {
+        dispatch('updateStocksData');
+        dispatch('updateUserData');
+      });
+  },
   makeAction({ commit, state }, payload) {
     const result = new Promise((resolve, reject) => {
       if (typeof payload.amount !== 'number') {
-        reject('Use only numbers!');
+        return reject('Use only numbers!');
       }
       if (!state.userData.stocks) {
         state.userData.stocks = {};
       }
       const type = payload.type;
-      const stock = state.currentData[payload.name];
+      const stock = state.currentData.features[payload.name];
       const price = stock[type] * payload.amount;
       const args = {
         name: payload.name,
@@ -59,9 +93,13 @@ export default {
     });
     return result;
   },
-  newDay({ commit }) {
-    const currentDay = +localStorage.getItem('day');
+  newDay({ commit, dispatch }) {
+    debugger
+    const currentDay = +localStorage.getItem('day') || 0;
     localStorage.setItem('day', currentDay + 1);
-    commit('calculateData');
+    dispatch('getStocksData')
+      .then(() => {
+        dispatch('updateStocksData');
+      });
   },
 };

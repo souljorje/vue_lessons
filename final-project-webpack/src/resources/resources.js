@@ -6,3 +6,4 @@ Vue.http.options.root = 'https://tradeapp-db8bb.firebaseio.com/';
 
 export const StocksData = Vue.resource('currentData.json');
 export const UserData = Vue.resource('userData.json');
+export const SavedData = Vue.resource('savedData.json');

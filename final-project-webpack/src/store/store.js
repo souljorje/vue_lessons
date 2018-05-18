@@ -26,8 +26,6 @@ export default new Vuex.Store({
       },
       day: 1,
     },
-    currentData: {
-    },
     userData: {
       stocks: {},
       funds: '-',
