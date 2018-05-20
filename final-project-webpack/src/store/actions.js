@@ -1,14 +1,21 @@
 import resources from '../resources/index';
 
 export default {
-  trade({ state, dispatch }, payload) {
-    dispatch('makeAction', payload)
-      .then(() => {
-        dispatch('updateUserData');
-      })
-      .catch((message) => {
-        throw new Error(message);
-      });
+  async trade({ state, dispatch }, payload) {
+    debugger;
+    try {
+      await dispatch('makeAction', payload);
+      const updateData = await dispatch('updateUserData');
+      return updateData;
+    } catch (error) {
+      throw new Error(error);
+    }
+      // .then(() => {
+      //   dispatch('updateUserData');
+      // })
+      // .catch((message) => {
+      //   throw new Error(message);
+      // });
   },
   getStocksData({ state, commit }) {
     return resources.getStocksData()
@@ -89,12 +96,11 @@ export default {
         price,
       };
       commit(type, args);
-      resolve();
+      return resolve(true);
     });
     return result;
   },
-  newDay({ commit, dispatch }) {
-    debugger
+  newDay({ dispatch }) {
     const currentDay = +localStorage.getItem('day') || 0;
     localStorage.setItem('day', currentDay + 1);
     dispatch('getStocksData')

@@ -4,8 +4,9 @@ export default {
     const copiedData = { ...state.currentData };
     const names = Object.keys(copiedData.features);
     names.forEach((name) => {
-      copiedData.features[name].buy = Math.round(copiedData.features[name].value * getRandom(0.5, 1.5));
-      copiedData.features[name].sell = Math.round(copiedData.features[name].value * getRandom(0.5, 1.5));
+      const defaultValue = copiedData.features[name].value;
+      copiedData.features[name].buy = Math.round(defaultValue * getRandom(0.5, 1.5));
+      copiedData.features[name].sell = Math.round(defaultValue * getRandom(0.5, 1.5));
     });
     state.currentData = copiedData;
   },

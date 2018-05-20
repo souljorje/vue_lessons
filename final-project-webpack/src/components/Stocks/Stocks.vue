@@ -46,29 +46,9 @@
 </style>
 
 <script>
-import { mapGetters } from 'vuex';
+import trading from '../../mixins/trading';
 
 export default {
-  data() {
-    return {
-      amount: {},
-    };
-  },
-  computed: {
-    stocksData() {
-      return this.$store.state.currentData.features;
-    },
-    ...mapGetters(['getNames']),
-  },
-  watch: {
-    getNames() {
-      const amount = this.$store.getters.getNames.reduce((result, item) => {
-        result[item] = null;
-        return result;
-      }, {});
-      this.amount = amount;
-    }
-  },
   methods: {
     buy(name) {
       this.$store.dispatch('trade', {
@@ -79,5 +59,6 @@ export default {
       this.amount[name] = null;
     },
   },
+  mixins: [trading],
 };
 </script>

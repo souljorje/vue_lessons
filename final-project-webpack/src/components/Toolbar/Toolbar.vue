@@ -21,7 +21,8 @@
         Portfolio
       </v-btn>
     </v-toolbar-items>
-    <v-toolbar-items>
+    <v-toolbar-items
+      class="hidden-xs-only">
       <v-btn
         flat
         exact
@@ -31,7 +32,8 @@
       </v-btn>
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <v-toolbar-items>
+    <v-toolbar-items
+      class="hidden-xs-only">
       <v-btn
         flat
         @click="endDay">
@@ -39,7 +41,8 @@
         End day
       </v-btn>
     </v-toolbar-items>
-    <v-toolbar-items>
+    <v-toolbar-items
+      class="hidden-xs-only">
       <v-menu
         offset-y>
         <v-btn flat slot="activator">
@@ -76,7 +79,7 @@
 
 
 <script>
-import { mapActions } from 'vuex';
+import navigation from '../../mixins/navigation';
 
 export default {
   computed: {
@@ -88,10 +91,7 @@ export default {
     toggleSidebar() {
       this.$store.commit('toggleSidebar');
     },
-    endDay() {
-      this.$store.dispatch('newDay');
-    },
-    ...mapActions(['saveData', 'loadData']),
   },
+  mixins: [navigation],
 };
 </script>

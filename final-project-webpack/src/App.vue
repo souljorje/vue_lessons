@@ -47,11 +47,11 @@ $duration = 0.3s
 
 
 <script>
+import { mapActions } from 'vuex';
 import appSidebar from './components/Sidebar/Sidebar';
 import appToolbar from './components/Toolbar/Toolbar';
 import appStocks from './components/Stocks/Stocks';
 import appPortfolio from './components/Portfolio/Portfolio';
-import { mapActions } from 'vuex';
 
 export default {
   components: {

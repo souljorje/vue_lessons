@@ -29,7 +29,7 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile
-        @click="">
+        @click="saveData">
         <v-list-tile-action>
           <v-icon>save</v-icon>
         </v-list-tile-action>
@@ -38,7 +38,7 @@
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile
-        @click="">
+        @click="loadData">
         <v-list-tile-action>
           <v-icon>restore</v-icon>
         </v-list-tile-action>
@@ -51,12 +51,10 @@
 </template>
 
 <script>
+import navigation from '../../mixins/navigation';
+
 export default {
-  methods: {
-    endDay() {
-      this.$store.dispatch('newDay');
-    }
-  },
+  mixins: [navigation],
   computed: {
     showSidebar: {
       get() {
