@@ -62,10 +62,13 @@ export default {
   },
   name: 'App',
   methods: {
-    ...mapActions(['newDay', 'getUserData']),
+    ...mapActions(['getStocksData', 'getUserData', 'updateStocksData']),
   },
   created() {
-    this.newDay();
+    this.getStocksData()
+      .then(() => {
+        this.updateStocksData();
+      });
     this.getUserData();
   },
 };

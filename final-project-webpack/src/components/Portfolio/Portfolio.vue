@@ -86,35 +86,16 @@ $duration = 0.2s
 
 
 <script>
-// import { mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import trading from '../../mixins/trading';
 
 export default {
-  data() {
-    return {
-      // amount: {},
-      hasStocks: Math.max(...Object.values(this.$store.state.userData.stocks)) < 1,
-    };
-  },
   computed: {
-    // stocksData() {
-    //   return this.$store.state.currentData.features;
-    // },
     userStocks() {
       return this.$store.state.userData.stocks;
     },
-    // ...mapGetters(['getNames']),
+    ...mapGetters(['hasStocks']),
   },
-  // watch: {
-  //   getNames() {
-  //     const amount = this.$store.getters.getNames.reduce((result, item) => {
-  //       const immutable = { ...result };
-  //       immutable[item] = null;
-  //       return immutable;
-  //     }, {});
-  //     this.amount = amount;
-  //   },
-  // },
   methods: {
     sell(name) {
       this.$store.dispatch('trade', {
@@ -124,7 +105,6 @@ export default {
       });
       this.amount[name] = null;
       this.test = true;
-      this.hasStocks = Math.max(...Object.values(this.$store.state.userData.stocks)) < 1;
     },
   },
   mixins: [trading],

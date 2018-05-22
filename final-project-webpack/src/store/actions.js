@@ -2,7 +2,6 @@ import resources from '../resources/index';
 
 export default {
   async trade({ state, dispatch }, payload) {
-    debugger;
     try {
       await dispatch('makeAction', payload);
       const updateData = await dispatch('updateUserData');
@@ -10,36 +9,26 @@ export default {
     } catch (error) {
       throw new Error(error);
     }
-      // .then(() => {
-      //   dispatch('updateUserData');
-      // })
-      // .catch((message) => {
-      //   throw new Error(message);
-      // });
   },
-  getStocksData({ state, commit }) {
-    return resources.getStocksData()
-      .then((response) => {
-        if (response.status !== 200) {
-          throw new Error(`Server responded with status ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const currentDay = localStorage.getItem('day');
-        if (!data) {
-          localStorage.setItem('day', state.currentData.day);
-        } else if (data.day !== currentDay) {
-          const dayToSet = Math.max(data.day, currentDay);
-          state.currentData.day = dayToSet;
-          localStorage.setItem('day', dayToSet);
-        } else {
-          state.currentData = data;
-          return data;
-        }
-        commit('calculateData');
-        return state.currentData;
-      });
+  async getStocksData({ state, commit }) {
+    const response = await resources.getStocksData();
+    if (response.status !== 200) {
+      throw new Error(`Server responded with status ${response.status}`);
+    }
+    const data = await response.json();
+    const currentDay = +localStorage.getItem('day');
+    if (!data) {
+      localStorage.setItem('day', state.currentData.day);
+    } else if (data.day !== currentDay) {
+      const dayToSet = Math.max(data.day, currentDay);
+      state.currentData.day = dayToSet;
+      localStorage.setItem('day', dayToSet);
+    } else {
+      state.currentData = data;
+      return data;
+    }
+    commit('calculateData');
+    return state.currentData;
   },
   updateStocksData({ state }) {
     resources.updateStocksData(state.currentData)

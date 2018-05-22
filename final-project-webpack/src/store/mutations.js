@@ -33,7 +33,7 @@ export default {
     if (currentAmount && currentAmount > 0) {
       if (currentAmount < payload.amount) {
         userStocks[payload.name] = 0;
-        state.userData.funds += state.currentData.features[payload.name].sell * payload.amount;
+        state.userData.funds += state.currentData.features[payload.name].sell * currentAmount;
       } else {
         userStocks[payload.name] -= payload.amount;
         state.userData.funds += payload.price;
